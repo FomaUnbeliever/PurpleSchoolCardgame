@@ -1,15 +1,9 @@
 <template>
-    <div>
-    Текущая дата: {{ currentDate }}
-    </div>
+  <div>Текущая дата: {{ currentDate }}</div>
 </template>
 
-<script>
-export default {
-  data(){
-        return{
-            currentDate: new Date().toLocaleDateString('ru-RU')
-        }
-        }
-}
+<script setup>
+import { ref } from 'vue'
+
+const currentDate = ref(new Date().toLocaleDateString('ru-RU'))
 </script>
