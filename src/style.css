@@ -1,4 +1,12 @@
 :root {
+  --color-bg: #0000ff;
+  --text-color: #ffffff;
+  --color-bg-main: #222831;
+  
+}
+
+body
+{
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
