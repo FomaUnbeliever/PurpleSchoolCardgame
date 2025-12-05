@@ -1,9 +1,20 @@
+<script setup>
+ import Button from "./Button.vue";
+</script>
+
 <template>
-  <div>Текущая дата: {{ currentDate }}</div>
+  <main class="main">
+    <Button>Сохранить</Button>
+  </main>
+    
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<style scoped>
+.main{
+    background: var(--color-bg-main);
+    padding: 60px 50px;
+    border-radius: 25px;
+}
+</style>
 
-const currentDate = ref(new Date().toLocaleDateString('ru-RU'))
-</script>
+
