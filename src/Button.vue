@@ -23,6 +23,7 @@
         font-weight: 600;
         color: var(--text-color);
         cursor: pointer;
+        
  
          
     }
