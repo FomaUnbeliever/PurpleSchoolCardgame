@@ -14,6 +14,7 @@
 <style scoped>
     .button {
         border: none;
+        border-radius: 100px;
         text-rendering: var(--text-color);
         border-radius: 100px;
         background: var(--color-bg);
@@ -22,9 +23,9 @@
         font-size: 20px;
         font-weight: 600;
         color: var(--text-color);
-        cursor: pointer;
-        
- 
-         
+        cursor: pointer;     
+    }
+     .button:hover{
+         background: var(--gradient-inverted);
     }
 </style>

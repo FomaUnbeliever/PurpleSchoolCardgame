@@ -2,15 +2,16 @@
   --color-bg: #0000ff;
   --text-color: #ffffff;
   --color-bg-main: #222831;
-  
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 100;
-  font-style: normal;
+  --font: "Montserrat", sans-serif;  
+ 
 }
 
 body
 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
