@@ -1,35 +1,41 @@
+<!-- src/App.vue -->
+<template>
+  <Header :score="gameScore" />
+  <div class="game-board">
+    <Card
+      v-for="(card, index) in cards"
+      :key="index"
+      :value="card.value"
+      :status="card.status"
+      @status-change="(newStatus) => updateCardStatus(index, newStatus)"
+    />
+  </div>
+</template>
+
 <script setup>
 import { ref } from 'vue'
-import CitySelect from './components/CitySelect.vue'
-import Stat from './components/Stat.vue'
+import Header from './components/Header.vue'
+import Card from './components/Card.vue'
 
-let savedCity = ref('Moscow')
-let data =  ref({
-  humidity: 90,
-});
+const gameScore = ref(0)
 
+const cards = ref([
+  { value: 'A', status: 'closed' },
+  { value: 'B', status: 'closed' },
+  { value: 'A', status: 'closed' },
+  { value: 'B', status: 'closed' }
+])
 
-
-async function getCity(city) {
-  savedCity.value = city;
-  data.value.humidity = "20";
+function updateCardStatus(index, newStatus) {
+  cards.value[index].status = newStatus
+  // Можно добавить логику сравнения пар и обновления score
 }
 </script>
 
-<template>
-  <main class="main">
-    {{ savedCity }}
-    <Stat v-bind="data"></Stat>
-    <Stat label="Влажность" :stat="data.humidity +'%'"/>
-    <Stat label="Осадки" stat="0%"></Stat>
-    <CitySelect @select-city="getCity" />
-  </main>
-</template>
-
-<style scoped>
-.main {
-    background: var(--color-bg-main);
-    padding: 60px 50px;
-    border-radius: 25px;
+<style>
+.game-board {
+  display: flex;
+  gap: 1rem;
+  padding: 2rem;
 }
 </style>
