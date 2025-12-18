@@ -1,13 +1,13 @@
 <!-- src/App.vue -->
 <template>
-  <Header :score="gameScore" />
-  <div class="game-board">
+  <Header :score="score" />
+  <div style="padding: 20px; display: flex; gap: 1rem;">
+    <!-- Выводим ТОЛЬКО ОДНУ карту (по заданию) -->
     <Card
-      v-for="(card, index) in cards"
-      :key="index"
-      :value="card.value"
-      :status="card.status"
-      @status-change="(newStatus) => updateCardStatus(index, newStatus)"
+      :word="card.word"
+      :translation="card.translation"
+      :state="card.state"
+      @update-state="newState => card.state = newState"
     />
   </div>
 </template>
@@ -17,25 +17,14 @@ import { ref } from 'vue'
 import Header from './components/Header.vue'
 import Card from './components/Card.vue'
 
-const gameScore = ref(0)
+// Реактивный счёт
+const score = ref(0)
 
-const cards = ref([
-  { value: 'A', status: 'closed' },
-  { value: 'B', status: 'closed' },
-  { value: 'A', status: 'closed' },
-  { value: 'B', status: 'closed' }
-])
-
-function updateCardStatus(index, newStatus) {
-  cards.value[index].status = newStatus
-  // Можно добавить логику сравнения пар и обновления score
-}
+// Одна карта (реактивная)
+const card = ref({
+  word: 'dog',
+  translation: 'собака',
+  state: 'closed',       // может быть 'opened'
+  status: 'pending'      // пока не используем активно
+})
 </script>
-
-<style>
-.game-board {
-  display: flex;
-  gap: 1rem;
-  padding: 2rem;
-}
-</style>

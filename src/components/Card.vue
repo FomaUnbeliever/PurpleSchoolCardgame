@@ -1,79 +1,48 @@
 <!-- src/components/Card.vue -->
 <template>
-  <div
-    class="card"
-    :class="{ flipped: isFlipped, matched: status === 'matched' }"
-    @click="flip"
-  >
-    <div class="card-inner">
-      <div class="card-front">?</div>
-      <div class="card-back">{{ value }}</div>
+  <div class="card" @click="flip">
+    <div v-if="state === 'closed'" class="card-face card-front">?</div>
+    <div v-else class="card-face card-back">
+      {{ word }} — {{ translation }}
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
-
 const props = defineProps({
-  value: { type: [String, Number], required: true },
-  status: { type: String, default: 'closed' } // closed | opened | matched
+  word: { type: String, required: true },
+  translation: { type: String, required: true },
+  state: { type: String, default: 'closed' } // 'closed' | 'opened'
 })
 
-const emit = defineEmits(['flip', 'status-change'])
-
-const isFlipped = ref(props.status !== 'closed')
+const emit = defineEmits(['update-state'])
 
 function flip() {
-  if (props.status === 'matched') return
-
-  const newStatus = isFlipped.value ? 'closed' : 'opened'
-  isFlipped.value = !isFlipped.value
-  emit('status-change', newStatus)
-  emit('flip')
+  if (props.state === 'closed') {
+    emit('update-state', 'opened')
+  } else {
+    emit('update-state', 'closed')
+  }
 }
 </script>
 
 <style scoped>
 .card {
-  width: 80px;
-  height: 100px;
-  perspective: 600px;
+  width: 120px;
+  height: 160px;
+  border: 2px solid #444;
+  border-radius: 8px;
   cursor: pointer;
-}
-
-.card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-
-.card.flipped .card-inner {
-  transform: rotateY(180deg);
-}
-
-.card-front,
-.card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #333;
-  backface-visibility: hidden;
   font-weight: bold;
-}
-
-.card-back {
-  transform: rotateY(180deg);
   background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.card.matched {
-  opacity: 0.6;
-  pointer-events: none;
+.card-face {
+  text-align: center;
+  padding: 10px;
 }
 </style>
