@@ -1,13 +1,15 @@
 <!-- src/App.vue -->
 <template>
   <Header :score="score" />
-  <div style="padding: 20px; display: flex; gap: 1rem;">
-    <!-- Выводим ТОЛЬКО ОДНУ карту (по заданию) -->
+  <div class="cards-container">
     <Card
+      v-for="(card, index) in cards"
+      :key="index"
       :word="card.word"
       :translation="card.translation"
       :state="card.state"
-      @update-state="newState => card.state = newState"
+      :status="card.status"
+      @update-state="newState => cards[index].state = newState"
     />
   </div>
 </template>
@@ -17,14 +19,41 @@ import { ref } from 'vue'
 import Header from './components/Header.vue'
 import Card from './components/Card.vue'
 
-// Реактивный счёт
-const score = ref(0)
+const score = ref(10)
 
-// Одна карта (реактивная)
-const card = ref({
-  word: 'dog',
-  translation: 'собака',
-  state: 'closed',       // может быть 'opened'
-  status: 'pending'      // пока не используем активно
-})
+const cards = ref([
+  {
+    word: 'car',
+    translation: 'автомобиль',
+    state: 'closed',
+    status: 'pending'
+  },
+  {
+    word: 'dog',
+    translation: 'собака',
+    state: 'opened',
+    status: 'success'
+  },
+  {
+    word: 'cat',
+    translation: 'кот',
+    state: 'opened',
+    status: 'fail'
+  },
+  {
+    word: 'bus',
+    translation: 'автобус',
+    state: 'closed',
+    status: 'pending'
+  }
+])
 </script>
+
+<style>
+.cards-container {
+  padding: 20px;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+</style>
