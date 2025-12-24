@@ -15,38 +15,31 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 import Header from './components/Header.vue'
 import Card from './components/Card.vue'
 
-const score = ref(10)
+const score = ref(0)
+const cards = ref([])
 
-const cards = ref([
-  {
-    word: 'car',
-    translation: 'автомобиль',
-    state: 'closed',
-    status: 'pending'
-  },
-  {
-    word: 'dog',
-    translation: 'собака',
-    state: 'opened',
-    status: 'success'
-  },
-  {
-    word: 'cat',
-    translation: 'кот',
-    state: 'opened',
-    status: 'fail'
-  },
-  {
-    word: 'bus',
-    translation: 'автобус',
-    state: 'closed',
-    status: 'pending'
+onMounted(async () => {
+  try {
+    const response = await axios.get('http://localhost:3001/cards')
+    // Добавляем недостающие поля: state и status
+    cards.value = response.data.map(item => ({
+      ...item,
+      state: 'closed',
+      status: 'pending'
+    }))
+  } catch (error) {
+    console.error('Ошибка при загрузке карточек:', error)
+    // Фолбэк — если API не запущен
+    cards.value = [
+      { word: 'car', translation: 'автомобиль', state: 'closed', status: 'pending' }
+    ]
   }
-])
+})
 </script>
 
 <style>
